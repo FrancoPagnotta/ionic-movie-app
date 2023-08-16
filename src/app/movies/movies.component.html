@@ -1,3 +1,15 @@
-<p>
-  movies works!
-</p>
+<app-header title="Top Rated Movies"></app-header>
+
+<ion-content>
+  <ion-list *ngIf="movies">
+    <ion-item *ngFor="let movie of movies; let index">
+      <ion-avatar slot="start">
+        <img [src]="movie.poster_path" alt="avatar" />
+      </ion-avatar>
+      <ion-label>{{ movie.original_title }}</ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
