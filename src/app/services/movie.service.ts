@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Movie } from '../interfaces/Movie.interface';
 import { MoviesApiResponse } from '../interfaces/MoviesApiResponse.interface';
@@ -21,7 +21,12 @@ export class MovieService {
         page: pageNumber ?? 1
       }
     }).pipe(
-      map(response => response.results)
+      tap((response: MoviesApiResponse) => {
+        for (const movie of response.results) {
+          movie.poster_path = `${environment.images}/w92${movie.poster_path}`;
+        }
+      }),
+      map((response: MoviesApiResponse) => response.results)
     )
   }
 
