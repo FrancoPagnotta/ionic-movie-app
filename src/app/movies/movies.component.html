@@ -1,15 +1,20 @@
 <app-header title="Top Rated Movies"></app-header>
 
 <ion-content>
-  <ion-list *ngIf="movies">
+  <ion-list>
     <ion-item *ngFor="let movie of movies; let index">
       <ion-avatar slot="start">
-        <img [src]="movie.poster_path" alt="avatar" />
+        <img [src]="movie.poster_path" alt="avatar"/>
       </ion-avatar>
-      <ion-label>{{ movie.original_title }}</ion-label>
+      <ion-label>
+        {{ movie.original_title }}
+        <p> {{ movie.release_date | date: 'y' }} </p>
+      </ion-label>
+      <ion-badge slot="end"> {{ movie.vote_average }} </ion-badge>
     </ion-item>
   </ion-list>
-  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+
+  <ion-infinite-scroll (ionInfinite)="loadMoreMovies($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
